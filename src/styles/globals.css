@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.muslces:hover {
+    background-color: black;
+    color: white
+}
+
+.addexce input {
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.addexce button:hover {
+  background-color: black;
+  color: white
+}
+
+.maketraining:hover {
+  background-color: black;
+  color: white
+}
