@@ -7,7 +7,7 @@ export const fitnessRouter =  createTRPCRouter({
         id: z.string(),
     }))
     .query( async({ input }) => {
-        const excercises  = await prisma?.bodyPart.findMany({
+        const excercises = await prisma?.bodyPart.findMany({
             where: {
                 id: input.id
             },

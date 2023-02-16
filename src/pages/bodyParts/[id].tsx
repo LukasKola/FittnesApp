@@ -1,10 +1,11 @@
 
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { Input } from 'postcss';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { prisma } from '../../server/db';
 import { api } from '../../utils/api';
-export const getStaticPaths = async () => {
+
+export const getStaticPaths: GetStaticPaths = async () => {
     const bodyparts = await prisma.bodyPart.findMany({
         select: {
             id: true,
@@ -22,14 +23,13 @@ export const getStaticPaths = async () => {
     }
 }
 
-export const getStaticProps = async (_context: any) => {
+export const getStaticProps: GetStaticProps = async (_context: any) => {
     const id = _context.params.id
-    const excercises = await prisma?.exercises.findMany({
+    const excercises = await prisma.exercises.findMany({
         where: {
             id: id
         }
     })
-
     return {
         props: { excercises: excercises }
     }
@@ -41,7 +41,7 @@ type Excercise = [{
 }]
 
 const Excercises = ({ excercises }: { excercises: Excercise }) => {
-    console.log(excercises);
+    const [message, setMessage] = useState<String>()
     const router = useRouter();
     const urlQuery = (router.query.musle as string) || '';
     const addExcercise = api.fitness.addExcercise.useMutation()
@@ -49,18 +49,15 @@ const Excercises = ({ excercises }: { excercises: Excercise }) => {
     const inputValue = newExceName.current?.childNodes[1] as HTMLInputElement
 
     const handleClickAddExce = () => {
-        if (inputValue.value) {
-            console.log(inputValue.value);
+        if (inputValue.value.length > 3) {
             addExcercise.mutate({
                 id: excercises[0].id,
                 excerciseName: inputValue.value
             })
         } else {
-            console.log('no input value');
-
+            setMessage('No input provided')
         }
     }
-
 
     return (
         <div className='p-2 m-1 border border-black w-6/6 h-screen flex flex-col bg-gray-100'>
@@ -71,20 +68,17 @@ const Excercises = ({ excercises }: { excercises: Excercise }) => {
                     return (
                         <>
                             <div className='border-2 border-black rounded-md shadow m-2 p-2 '>
-
                                 <p key={exe.id}>{exe.name}</p>
-
                             </div>
                         </>
-
                     )
                 })}
-
             </div>
             <label ref={newExceName} className='border-2 border-black p-2 rounded-md addexce ' > Add new excercise:
                 <  input />
                 <button onClick={handleClickAddExce} className='border border-black p-2 rounded-md'  >Add</button>
             </label>
+            {message && <p>{message}</p>}
         </div>
 
     )

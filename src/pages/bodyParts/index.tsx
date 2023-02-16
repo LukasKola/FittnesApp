@@ -1,16 +1,8 @@
-
 import Link from "next/link"
 import { api } from "../../utils/api"
 
-
-
-
 const addExcercise = () => {
     const getAllBodyParts = api.fitness.getBodyParts.useQuery()
-    const mouseOverMessage = 'click to show excercises'
-
-    console.log(getAllBodyParts);
-
 
     return (
         <div className="p-2 m-2">
@@ -27,10 +19,7 @@ const addExcercise = () => {
                         {BP.name}
                     </Link>
                 </>
-
             ))}
-
-
         </div>
     )
 }

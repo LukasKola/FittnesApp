@@ -1,8 +1,7 @@
 import { test, expect} from '@jest/globals'
-import { AppRouter, appRouter } from '../../root'
-import { prisma } from '../../../db'
+import { appRouter } from '../../root'
 import { mockDeep} from 'jest-mock-extended'
-import { BodyPart, Example, PrismaClient } from '@prisma/client'
+import { BodyPart, PrismaClient } from '@prisma/client'
 
 
 
@@ -23,5 +22,4 @@ test('getBodyParts test', async () => {
 
     expect(result).toHaveLength(mockOutput.length);
     expect(result).toStrictEqual(mockOutput)
-    console.log(result)
 })

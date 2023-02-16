@@ -46,6 +46,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
+  token         String?
   accounts      Account[]
   sessions      Session[]
 }
@@ -59,8 +61,8 @@ model VerificationToken {
 }
 
 model Exercises {
-  id       String   @default(cuid()) @unique
-  exeid    Int      @id @default(autoincrement())
+  exeid    Int      @id @default(autoincrement())@unique
+  id       String   @default(cuid()) 
   name     String
   bodypart BodyPart @relation(fields: [id], references: [id], onDelete: Cascade)
   trainingDays Trainingday[]
